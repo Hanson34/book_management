@@ -3,6 +3,9 @@
 #define BOOK_MANAGEMENT_GUARD__H
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <malloc.h>
+#include <string.h>
 
 /*You can extend the structs (Book and BookArray) defined in this head file;
   However, you may not change the function prototypes. 
@@ -21,6 +24,7 @@ typedef struct _Book {
 typedef struct _BookArray {
 	 Book* array; // pointer to array (or linked list) of struct Book.
 	 unsigned int length; // number of elements in the (Book*) array 
+	 struct _BookArray *next;
 }BookArray;
 
 
