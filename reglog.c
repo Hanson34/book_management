@@ -77,6 +77,7 @@ int login(info head)
     }
     printf("User not found\n");
     getchar();
+    return 0;
 }
 
 //register function
