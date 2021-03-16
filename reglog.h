@@ -14,6 +14,5 @@ info Linkedlist();
 int login(info head);
 int registerUser(info head);
 void save(info head);
-int menu();
 
 #endif
