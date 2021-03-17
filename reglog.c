@@ -66,11 +66,17 @@ int login(info head)
     while(buf)
     {
         //check the username and password
+        if(strcmp(buf->username,"admin")==0 && strcmp(buf->password,"admin")==0)
+        {
+            printf("Welcome admin\n");
+            getchar();
+            return 1;
+        }
         if(strcmp(buf->username,username)==0 && strcmp(buf->password,password)==0)
         {
             printf("Welcome to the library\n");
             getchar();
-            return 1;
+            return 2;
         }
         buf = buf->next;
     }

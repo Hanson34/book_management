@@ -231,3 +231,8 @@ BookArray* find_book_by_year (unsigned int year)
     printf("Book not found\n");
     return NULL;
 }
+
+void displayBooks()
+{
+    
+}
