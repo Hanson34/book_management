@@ -28,6 +28,8 @@ typedef struct _BookArray {
 }BookArray;
 
 
+BookArray* bookLinkedlist();
+
 //saves the database of books in the specified file
 //returns 1 if books were stored correctly, or an error code otherwise
 int store_books(BookArray *head);
@@ -63,6 +65,6 @@ BookArray* find_book_by_author (const char *author);
 //array is the null pointer.
 BookArray* find_book_by_year (unsigned int year);
 
-void displayBooks();
+void displayBooks(BookArray *head);
 
 #endif

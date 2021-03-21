@@ -1,5 +1,5 @@
-#ifndef _REGLOG_H_
-#define _REGLOG_H_
+#ifndef REGLOG_GUARD__H
+#define REGLOG_GUARD__H
 
 #include <stdio.h>
 
@@ -10,7 +10,7 @@ typedef struct userinfo{
     struct userinfo *next;
 } userinfo, *info;
 
-info Linkedlist();
+info userLinkedlist();
 int login(info head);
 int registerUser(info head);
 void save(info head);

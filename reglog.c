@@ -13,7 +13,7 @@
 // } userinfo, *info;
 
 //create a linked list for userinfo
-info linkedList()
+info userLinkedlist()
 {
     //head of linked list
     info infoHead = (info)malloc(sizeof(userinfo));
@@ -129,33 +129,3 @@ void save(info head)
         fprintf(us, "\n");
     }
 }
-
-//interface
-// int menu()
-// {
-//     int option;
-//     printf("1.Login\n");
-//     printf("2.Register\n");
-//     printf("3.Exit\n");
-//     printf("Option:");
-//     scanf("%d", &option);
-//     info head = linkedList();
-//     while(1)
-//     {
-//         if(option==1)
-//         if(login(head))
-//         {
-
-//         }
-//         else if(option==2)
-//         registerUser(head);
-//         else if(option==3)
-//         {
-//             save(head);
-//             return 0;
-//         }
-//         else
-//         return 0;
-//     }
-// }
-

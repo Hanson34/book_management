@@ -6,6 +6,7 @@
 #include "interface.h"
 #include "book_management.h"
 #include "reglog.h"
+#include "loan.h"
 
 void run_interface()
 {
@@ -36,7 +37,7 @@ void run_interface()
                     printf("Option:");
                     scanf("%d", &option);
                     if(option==1)
-                    displayBooks();
+                    displayBooks(head);
                     else if(option==2)
                     {
                         BookArray *found = (BookArray *)malloc(sizeof(BookArray));

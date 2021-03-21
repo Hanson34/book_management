@@ -21,7 +21,7 @@
 
 int bookID=0;
 
-BookArray* LinkedList()
+BookArray* bookLinkedlist()
 {
     //head of linked list
     BookArray *bookHead = (BookArray *)malloc(sizeof(BookArray));
@@ -172,6 +172,8 @@ BookArray* find_book_by_title (const char *title)
         if(strcmp(buf->array->title,title)==0)
         {
             printf("Book found\n");
+            printf("ID\ttitle\tauthors\tyear\tcopies\n");
+            printf("%d\t%s\t%s\t%d\t%d\n", buf->array->id, buf->array->title, buf->array->authors, buf->array->year, buf->array->copies);
             return buf;
         }
         buf=buf->next;
@@ -198,6 +200,8 @@ BookArray* find_book_by_author (const char *author)
         if(strcmp(buf->array->authors,author)==0)
         {
             printf("Book found\n");
+            printf("ID\ttitle\tauthors\tyear\tcopies\n");
+            printf("%d\t%s\t%s\t%d\t%d\n", buf->array->id, buf->array->title, buf->array->authors, buf->array->year, buf->array->copies);
             return buf;
         }
         buf=buf->next;
@@ -224,6 +228,8 @@ BookArray* find_book_by_year (unsigned int year)
         if(buf->array->year==year)
         {
             printf("Book found\n");
+            printf("ID\ttitle\tauthors\tyear\tcopies\n");
+            printf("%d\t%s\t%s\t%d\t%d\n", buf->array->id, buf->array->title, buf->array->authors, buf->array->year, buf->array->copies);
             return buf;
         }
         buf=buf->next;
@@ -232,7 +238,10 @@ BookArray* find_book_by_year (unsigned int year)
     return NULL;
 }
 
-void displayBooks()
+void displayBooks(BookArray *head)
 {
-    
+    BookArray *buf = head;
+    printf("\nID\ttitle\tauthors\tyear\tcopies\n");
+    while(buf)
+    printf("%d\t%s\t%s\t%d\t%d\n", buf->array->id, buf->array->title, buf->array->authors, buf->array->year, buf->array->copies);
 }
