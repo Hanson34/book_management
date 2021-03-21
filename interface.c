@@ -73,6 +73,14 @@ void run_interface()
                         else
                         printf("\nNo such command\n");
                     }
+                    else if(option==3)
+                    add_book(head);
+                    else if(option==4)
+                    remove_book(head);
+                    else if(option==5)
+                    break;
+                    else
+                    printf("\nNo such command\n");
                 }
             }
             if(op==2)
@@ -86,6 +94,51 @@ void run_interface()
                     printf("5.Exit\n");
                     printf("Option:");
                     scanf("%d", &option);
+                    if(option==1)
+                    displayBooks(head);
+                    else if(option==2)
+                    {
+                        BookArray *found = (BookArray *)malloc(sizeof(BookArray));
+                        char name[20];
+                        int year;
+                        printf("\nSearch book by:\n");
+                        printf("1.title\n2.author\n3.year\nOption:");
+                        scanf("%d", &option);
+                        if(option==1)
+                        {
+                            printf("\nEnter the title:");
+                            scanf("%s", name);
+                            found = find_book_by_title (name);
+                            printf("\nID\ttitle\tauthors\tyear\tcopies\n");
+                            printf("%d\t%s\t%s\t%d\t%d\n", found->array->id, found->array->title, found->array->authors, found->array->year, found->array->copies);
+                        }
+                        else if(option==2)
+                        {
+                            printf("\nEnter the author:");
+                            scanf("%s", name);
+                            found = find_book_by_author (name);
+                            printf("\nID\ttitle\tauthors\tyear\tcopies\n");
+                            printf("%d\t%s\t%s\t%d\t%d\n", found->array->id, found->array->title, found->array->authors, found->array->year, found->array->copies);
+                        }
+                        else if(option==3)
+                        {
+                            printf("\nEnter the year:");
+                            scanf("%d", year);
+                            found = find_book_by_year (year);
+                            printf("\nID\ttitle\tauthors\tyear\tcopies\n");
+                            printf("%d\t%s\t%s\t%d\t%d\n", found->array->id, found->array->title, found->array->authors, found->array->year, found->array->copies);
+                        }
+                        else
+                        printf("\nNo such command\n");
+                    }
+                    else if(option==3)
+                    borrowBook();
+                    else if(option==4)
+                    returnBook();
+                    else if(option==5)
+                    break;
+                    else
+                    printf("\nNo such command\n");
                 }
             }
         }
@@ -96,5 +149,7 @@ void run_interface()
             save(head);
             exit(0);
         }
+        else
+        printf("\nNo such command\n");
     }
 }
