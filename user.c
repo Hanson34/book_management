@@ -100,6 +100,5 @@ int registerUser()
     strcpy(regi.password, password);
     saveuser(regi);
     printf("\nSuccessful registration\n");
-    getchar();
     return 1;
 }
