@@ -3,17 +3,21 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <malloc.h>
 #include <string.h>
 
-typedef struct loan{
-    char *username;
-    unsigned int id;
-    char *title;
-    char *authors;
-}loan;
+#include "book_management.h"
+#include "user.h"
 
-int borrowBook(info stu, const char *title);
-int returnBook(info stu);
+typedef struct{
+    char username[20];
+    unsigned int id;
+    char title[30];
+    char authors[30];
+}Loan;
+
+Loan loanlist[30];
+
+int borrowBook(User borrow, const char *title);
+int returnBook(const char *title);
 
 #endif
