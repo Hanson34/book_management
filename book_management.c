@@ -56,6 +56,7 @@ int add_book(Book add)
     load_books();
     for(int i=0; i<30; i++)
     {
+        //compare book add & existing titles
         if(strcmp(booklist[i].title, add.title)==0)
         {
             printf("\nBook exists\n");
@@ -64,6 +65,7 @@ int add_book(Book add)
     }
     printf("\nBook added\n");
     store_books(add);
+    //refresh array
     load_books();
     return 1;
 }
@@ -75,11 +77,14 @@ int remove_book(const char *name)
     load_books();
     for(int i=0; i<30; i++)
     {
+        //prevent condition that one author has many books
         if(strcmp(booklist[i].authors, name)==0||strcmp(booklist[i].title, name)==0)
         {
+            //move all books one place forward to cover the deleted book
             for(int j=i; j<29; j++)
             buf[j]=booklist[j+1];
             printf("\nBook has been removed\n");
+            //save into txt
             FILE *file=fopen("books.txt", "w+");
             for(int k=0; k<30; k++)
             {
@@ -90,7 +95,7 @@ int remove_book(const char *name)
             }
             fclose(file);
             return 1;
-        }
+        }//if not found, nothing would be changed
         else
         buf[i]=booklist[i];
     }
@@ -104,6 +109,7 @@ int remove_book(const char *name)
 //array is the null pointer.
 Book find_book_by_title (const char *title)
 {
+    //handle situation when no such book
     Book none;
     none.id = 0;
     load_books();
@@ -114,6 +120,7 @@ Book find_book_by_title (const char *title)
             printf("\nBook found\n");
             printf("ID\ttitle\tauthors\tyear\tcopies\n");
             printf("%u\t%s\t%s\t%u\t%u\n", booklist[i].id, booklist[i].title, booklist[i].authors, booklist[i].year, booklist[i].copies);
+            // return the book in the list
             return booklist[i];
         }
     }
@@ -127,6 +134,7 @@ Book find_book_by_title (const char *title)
 //array is the null pointer.
 Book find_book_by_author (const char *author)
 {
+    //handle situation when no such book
     Book none;
     none.id = 0;
     load_books();
@@ -137,6 +145,7 @@ Book find_book_by_author (const char *author)
             printf("\nBook found\n");
             printf("ID\ttitle\tauthors\tyear\tcopies\n");
             printf("%u\t%s\t%s\t%u\t%u\n", booklist[i].id, booklist[i].title, booklist[i].authors, booklist[i].year, booklist[i].copies);
+            // return the book in the list
             return booklist[i];
         }
     }
@@ -150,6 +159,7 @@ Book find_book_by_author (const char *author)
 //array is the null pointer.
 Book find_book_by_year (unsigned int year)
 {
+    //handle situation when no such book
     int a=0;
     Book none;
     none.id = 0;
@@ -161,7 +171,8 @@ Book find_book_by_year (unsigned int year)
             printf("\nBook found\n");
             printf("ID\ttitle\tauthors\tyear\tcopies\n");
             printf("%u\t%s\t%s\t%u\t%u\n", booklist[i].id, booklist[i].title, booklist[i].authors, booklist[i].year, booklist[i].copies);
-            // return booklist[i];
+            // return the book in the list
+            return booklist[i];
             a=1;
         }
     }
@@ -171,6 +182,7 @@ Book find_book_by_year (unsigned int year)
     return none;
 }
 
+//display all books in the terminal
 void displayBooks()
 {
     load_books();
@@ -179,6 +191,7 @@ void displayBooks()
     printf("%u\t%s\t%s\t%u\t%u\n", booklist[i].id, booklist[i].title, booklist[i].authors, booklist[i].year, booklist[i].copies);
 }
 
+//loads the database of loan from the specified file
 void load_loan()
 {
     FILE *file=fopen("loan.txt", "r");
@@ -187,12 +200,15 @@ void load_loan()
     fclose(file);
 }
 
+//refresh the loan & book database
 void refresh(Book re)
 {
     for(int i=0; i<30; i++)
     {
+        //prevent condition that one author has many books
         if(strcmp(booklist[i].authors, re.authors)==0||strcmp(booklist[i].title, re.title)==0)
         {
+            //move all books one place forward to cover the deleted book
             for(int j=i; j<29; j++)
             buf[j]=booklist[j+1];
             FILE *file=fopen("books.txt", "w+");
@@ -205,6 +221,7 @@ void refresh(Book re)
             }
             fclose(file);
         }
+        //if not found, nothing would be changed
         else
         buf[i]=booklist[i];
     }
@@ -213,45 +230,56 @@ void refresh(Book re)
 
 }
 
+//borrow the book from the database
 int borrowBook(User borrow, const char *title)
 {
     load_loan();
     int b;
     Book brow = find_book_by_title(title);
+    //if no existing book on loan
     if(brow.id==0)
     return 0;
     for(int i=0; i<30; i++)
     {
+        //prevent condition that one book is borrowed by many students
         if(strcmp(loanlist[i].username, borrow.username)==0 && strcmp(loanlist[i].title, title)==0)
         {
             printf("\nYou have already borrowed it\n");
             return 0;
         }
         if(strcmp(booklist[i].title,title)==0)
+        //record the place where the book is
         b=i;
     }
+    //write into a loan list
     strcpy(loanlist[loanID].username, borrow.username);
     loanlist[loanID].id=brow.id;
     strcpy(loanlist[loanID].title, brow.title);
     strcpy(loanlist[loanID].authors, brow.authors);
+    //save it into txt
     FILE *brw = fopen("loan.txt", "a+");
     fprintf(brw, "%u,%s,%s,%s", loanlist[loanID].id, loanlist[loanID].username, loanlist[loanID].title, loanlist[loanID].authors);
     fprintf(brw, "\n");
     fclose(brw);
     booklist[b].copies = booklist[b].copies-1;
+    //refresh list
     refresh(booklist[b]);
     printf("\nBook has been borrowed\n");
     return 1;
 }
 
+//return the book from the database
 int returnBook(User borrow, const char *title)
 {
     int b=0;
+    //refresh the loanlist
     load_books();
     load_loan();
+    //record place
     for(int i=0; i<30; i++)
     if(strcmp(booklist[i].title,title)==0)
     b=i;
+    //remove module
     for(int i=0; i<30; i++)
     {
         if(strcmp(booklist[i].title,title)==0)
@@ -280,9 +308,11 @@ int returnBook(User borrow, const char *title)
     return 0;
 }
 
+//another refresh and verification when return
 void returnRefresh(User borrow, const char *title)
 {
     int i=0;
+    //i = b if a book is returned
     i = returnBook(borrow, title);
     if(i!=0)
     {

@@ -70,7 +70,7 @@ void refresh(Book re);
 //borrow the book from the database
 int borrowBook(User borrow, const char *title);
 
-//returnthe book from the database
+//return the book from the database
 int returnBook(User borrow, const char *title);
 
 //another refresh and verification when return

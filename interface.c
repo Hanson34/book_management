@@ -35,6 +35,7 @@ static char *ask(const char *question) {
 void run_interface()
 {
     int option, num;
+    // loop when not enter 3
     while(1)
     {
         char *answer = ask("\n1.Login\n2.Register\n3.Exit\nOption: ");
@@ -42,10 +43,12 @@ void run_interface()
         free(answer);
         if(option==1)
         {
+            //user & book for storing infomation
             User oper;
             Book found;
             oper=login();
             int v = verification(oper);
+            //admin
             if(v==1)
             {
                 while(1)
@@ -128,6 +131,7 @@ void run_interface()
                     printf("\nNo such command\n");
                 }
             }
+            //student
             if(v==2)
             {
                 while(1)
@@ -194,8 +198,10 @@ void run_interface()
                 }
             }
         }
+        //register module
         else if(option==2)
         registerUser();
+        //exit
         else if(option==3)
         exit(0);
         else

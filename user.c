@@ -12,6 +12,7 @@
 
 // User list[30];
 
+//login function
 User login()
 {
     char name[20], username[20], password[20];
@@ -19,14 +20,18 @@ User login()
     scanf("%s",username);
     printf("Password:");
     scanf("%s",password);
+    //create a user to store string
     User login;
     strcpy(login.username, username);
     strcpy(login.password, password);
+    //return the User to veri module
     return login;
 }
 
+//verify the username & password, identity as well
 int verification(User v)
 {
+    //loan the userlist
     loaduser();
     for(int i=0; i<30; i++)
     {
@@ -35,12 +40,14 @@ int verification(User v)
         {
             printf("\nWelcome admin\n");
             getchar();
+            //1 when admin
             return 1;
         }
         if(strcmp(userlist[i].username, v.username)==0 && strcmp(userlist[i].password, v.password)==0)
         {
             printf("\nWelcome to the library\n");
             getchar();
+            //2 when student
             return 2;
         }
     }
@@ -49,6 +56,7 @@ int verification(User v)
     return 0;
 }
 
+//save to txt
 void saveuser(User save)
 {
     FILE *file = fopen("user.txt", "a+");
@@ -57,6 +65,7 @@ void saveuser(User save)
     fclose(file);
 }
 
+//load from specfic file
 void loaduser()
 {
     FILE *file = fopen("user.txt", "r+");
@@ -65,15 +74,19 @@ void loaduser()
     fclose(file);
 }
 
+//register function
 int registerUser()
 {
+    //load the userlist
     loaduser();
     char name[20], username[20], password[20];
+    //a user for string
     User regi;
     printf("\nStudent name:");
     scanf("%s",name);
     getchar();
     strcpy(regi.name, name);
+    // check if exists in the list
     for(int i=0; i<30; i++)
     {
         if(strcmp(userlist[i].name, name)==0)
@@ -98,8 +111,8 @@ int registerUser()
     scanf("%s",password);
     getchar();
     strcpy(regi.password, password);
+    //save it into the txt
     saveuser(regi);
     printf("\nSuccessful registration\n");
-    getchar();
     return 1;
 }
