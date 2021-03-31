@@ -64,11 +64,17 @@ void displayBooks();
 //loads the database of loan from the specified file
 void load_loan();
 
+//display loanlist
+void displayLoan(User borrow);
+
 //refresh the loan & book database
 void refresh(Book re);
 
 //borrow the book from the database
 int borrowBook(User borrow, const char *title);
+
+//check if current user has loan
+int loanCheck(User borrow);
 
 //return the book from the database
 int returnBook(User borrow, const char *title);

@@ -100,10 +100,10 @@ void run_interface()
                     else if(option==3)
                     {
                         Book add;
-                        answer = ask("Book id: ");
+                        answer = ask("\nBook id: ");
                         num = atoi(answer);
                         add.id = num;
-                        answer = ask("\nBook title: ");
+                        answer = ask("Book title: ");
                         strcpy(add.title, answer);
                         free(answer);
                         answer = ask("Book authors: ");
@@ -162,6 +162,11 @@ void run_interface()
                         else if(option==2)
                         {
                             answer = ask("\nEnter the authors: ");
+                            num = atoi(answer);
+                            if(num!='\0'){
+                                printf("\nInvalid input\n");
+                                break;
+                            }
                             found = find_book_by_title (answer);
                             free(answer);
                             // printf("\nID\ttitle\tauthors\tyear\tcopies\n");
@@ -172,6 +177,10 @@ void run_interface()
                             answer = ask("\nEnter the year: ");
                             num = atoi(answer);
                             free(answer);
+                            if(num=='\0'){
+                                printf("\nInvalid input\n");
+                                break;
+                            }
                             found = find_book_by_year (num);
                             // printf("\nID\ttitle\tauthors\tyear\tcopies\n");
                             // printf("%d\t%s\t%s\t%d\t%d\n", found.id, found.title, found.authors, found.year, found.copies);
@@ -187,6 +196,10 @@ void run_interface()
                     }
                     else if(option==4)
                     {
+                        int c= loanCheck(oper);
+                        if(c==0)
+                        break;
+                        displayLoan(oper);
                         answer = ask("\nEnter the title of the book you would like to return: ");
                         returnRefresh(oper, answer);
                         free(answer);

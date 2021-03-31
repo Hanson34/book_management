@@ -59,8 +59,10 @@ int add_book(Book add)
         //compare book add & existing titles
         if(strcmp(booklist[i].title, add.title)==0)
         {
-            printf("\nBook exists\n");
-            return 0;
+            remove_book(add.title);
+            store_books(add);
+            printf("\nBook added\n");
+            return 1;
         }
     }
     printf("\nBook added\n");
@@ -75,8 +77,13 @@ int add_book(Book add)
 int remove_book(const char *name)
 {
     load_books();
+    load_loan();
     for(int i=0; i<30; i++)
     {
+        if(strcmp(loanlist[i].title, name)==0){
+            printf("\nBook on loan\n");
+            return 0;
+        }
         //prevent condition that one author has many books
         if(strcmp(booklist[i].authors, name)==0||strcmp(booklist[i].title, name)==0)
         {
@@ -134,10 +141,19 @@ Book find_book_by_title (const char *title)
 //array is the null pointer.
 Book find_book_by_author (const char *author)
 {
+    // char c[30];
     //handle situation when no such book
     Book none;
     none.id = 0;
     load_books();
+    // strcpy(c, author);
+    // for(int i=0; i<30; i++){
+    //     printf("%c",c[i]);
+    //     if(c[i]>='0'||c[i]<='9'){
+    //         printf("\nInvalid input\n");
+    //         return none;
+    //     }
+    // }
     for(int i=0; i<30; i++)
     {
         if(strcmp(booklist[i].authors,author)==0)
@@ -187,8 +203,11 @@ void displayBooks()
 {
     load_books();
     printf("\nID\ttitle\tauthors\tyear\tcopies\n");
-    for(int i=0; i<30; i++)
-    printf("%u\t%s\t%s\t%u\t%u\n", booklist[i].id, booklist[i].title, booklist[i].authors, booklist[i].year, booklist[i].copies);
+    for(int i=0; i<30; i++){
+        if(booklist[i].id==0)
+        break;
+        printf("%u\t%s\t%s\t%u\t%u\n", booklist[i].id, booklist[i].title, booklist[i].authors, booklist[i].year, booklist[i].copies);
+    }
 }
 
 //loads the database of loan from the specified file
@@ -266,6 +285,30 @@ int borrowBook(User borrow, const char *title)
     refresh(booklist[b]);
     printf("\nBook has been borrowed\n");
     return 1;
+}
+
+void displayLoan(User borrow){
+    load_loan();
+    printf("\nID\tusername\ttitle\tauthors\n");
+    for(int i=0; i<30; i++){
+        if(loanlist[i].id==0)
+        break;
+        if(loanlist[i].username==borrow.username)
+        printf("%u\t%s\t%s\t%s\n", loanlist[i].id, loanlist[i].username, loanlist[i].title, loanlist[i].authors);
+    }
+}
+
+//check if current user has loan
+int loanCheck(User borrow){
+    int c=0;
+    for(int i=0; i<30; i++){
+        if(strcmp(loanlist[i].username,borrow.username)==0)
+        c +=1;
+    }
+    if(c==0){
+        printf("\nNo borrowed book\n");
+        return 0;
+    }
 }
 
 //return the book from the database
